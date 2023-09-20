@@ -3,8 +3,7 @@
     "references": [
         "Unity.XR.Management",
         "Unity.InputSystem",
-        "Unity.Subsystem.Registration",
-        "Unity.XR.Hands"
+        "Unity.Subsystem.Registration"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -23,11 +22,6 @@
             "name": "com.unity.xr.management",
             "expression": "3.2.0",
             "define": "XR_MGMT_GTE_320"
-        },
-        {
-            "name": "com.unity.xr.hands",
-            "expression": "1.1.0",
-            "define": "XR_HANDS"
         }
     ],
     "noEngineReferences": false

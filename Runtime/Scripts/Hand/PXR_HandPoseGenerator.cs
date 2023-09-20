@@ -19,7 +19,6 @@ namespace Unity.XR.PXR
     {
 
         public PXR_HandPoseConfig config;
-        public PXR_HandPosePreview preview;
 
         //Shapes
         public ShapesRecognizer.Finger thumb = new ShapesRecognizer.Finger(HandFinger.Thumb);

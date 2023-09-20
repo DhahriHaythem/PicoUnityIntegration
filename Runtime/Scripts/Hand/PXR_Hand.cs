@@ -23,8 +23,16 @@ public class PXR_Hand : MonoBehaviour
     public bool Computed { get; private set; }
     public Posef RayPose { get; private set; }
     public bool RayValid { get; private set; }
-    public bool Pinch { get; private set; }
-    public float PinchStrength { get; private set; }
+    public bool RayTouched { get; private set; }
+    public float TouchStrengthRay { get; private set; }
+    public bool IndexPinching { get; private set; }
+    public bool MiddlePinching { get; private set; }
+    public bool RingPinching { get; private set; }
+    public bool LittlePinching { get; private set; }
+    public float PinchStrengthIndex { get; private set; }
+    public float PinchStrengthMiddle { get; private set; }
+    public float PinchStrengthRing { get; private set; }
+    public float PinchStrengthLittle { get; private set; }
 
     private HandJointLocations handJointLocations = new HandJointLocations();
     private HandAimState aimState = new HandAimState();
@@ -68,24 +76,7 @@ public class PXR_Hand : MonoBehaviour
                 }
                 else
                 {
-                    UnityEngine.Pose parentPose = UnityEngine.Pose.identity;
-
-                    if (i == (int)HandJoint.JointPalm ||
-                        i == (int)HandJoint.JointThumbMetacarpal ||
-                        i == (int)HandJoint.JointIndexMetacarpal ||
-                        i == (int)HandJoint.JointMiddleMetacarpal ||
-                        i == (int)HandJoint.JointRingMetacarpal ||
-                        i == (int)HandJoint.JointLittleMetacarpal)
-                    {
-                        parentPose = new UnityEngine.Pose(handJointLocations.jointLocations[1].pose.Position.ToVector3(), handJointLocations.jointLocations[1].pose.Orientation.ToQuat());
-                    }
-                    else
-                    {
-                        parentPose = new UnityEngine.Pose(handJointLocations.jointLocations[i-1].pose.Position.ToVector3(), handJointLocations.jointLocations[i-1].pose.Orientation.ToQuat());
-                    }
-                    
-                    var inverseParentRotation = Quaternion.Inverse(parentPose.rotation);
-                    handJoints[i].localRotation = inverseParentRotation * handJointLocations.jointLocations[i].pose.Orientation.ToQuat();
+                    handJoints[i].localRotation = handJointLocations.jointLocations[i].pose.Orientation.ToQuat();
                 }
             }
         }
@@ -99,8 +90,18 @@ public class PXR_Hand : MonoBehaviour
 
             RayPose = aimState.aimRayPose;
             RayValid = (aimState.aimStatus&HandAimStatus.AimRayValid) != 0;
-            Pinch = (aimState.aimStatus&HandAimStatus.AimRayTouched) != 0;
-            PinchStrength = aimState.touchStrengthRay;
+            RayTouched = (aimState.aimStatus&HandAimStatus.AimRayTouched) != 0;
+            TouchStrengthRay = aimState.touchStrengthRay;
+
+            IndexPinching = (aimState.aimStatus&HandAimStatus.AimIndexPinching) != 0;
+            MiddlePinching = (aimState.aimStatus&HandAimStatus.AimMiddlePinching) != 0;
+            RingPinching = (aimState.aimStatus&HandAimStatus.AimRingPinching) != 0;
+            LittlePinching = (aimState.aimStatus&HandAimStatus.AimLittlePinching) != 0;
+
+            PinchStrengthIndex = aimState.pinchStrengthIndex;
+            PinchStrengthMiddle = aimState.pinchStrengthMiddle;
+            PinchStrengthRing = aimState.pinchStrengthRing;
+            PinchStrengthLittle = aimState.pinchStrengthLittle;
         }
     }
 

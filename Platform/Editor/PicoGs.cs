@@ -31,16 +31,6 @@ namespace Pico.Platform.Editor
                 EditorUtility.SetDirty(PXR_PlatformSetting.Instance);
             }
         }
-        
-        public static bool useHighlight
-        {
-            get { return PXR_PlatformSetting.Instance.useHighlight; }
-            set
-            {
-                PXR_PlatformSetting.Instance.useHighlight = value;
-                EditorUtility.SetDirty(PXR_PlatformSetting.Instance);
-            }
-        }
 
         public static bool enableEntitlementCheck
         {
